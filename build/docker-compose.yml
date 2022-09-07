@@ -1,0 +1,22 @@
+version: '3.5'
+services:
+  nginx:
+    image: nginx:1.13
+    container_name: nginx
+    restart: always
+    depends_on:
+      - backend
+    ports:
+      - "80:80"
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf
+
+  backend:
+    build:
+      context: ../
+      dockerfile: build/backend/Dockerfile
+    container_name: backend
+    restart: always
+    working_dir: /app
+    volumes:
+      - ../backend/files:/app/files
